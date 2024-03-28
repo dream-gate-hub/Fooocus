@@ -59,15 +59,21 @@ def assert_model_integrity():
 @torch.inference_mode()
 def refresh_base_model(name):
     global model_base
-
-    filename = os.path.abspath(os.path.realpath(os.path.join(modules.config.path_checkpoints, name)))
-    if filename not in models:
-        models[filename]=core.load_model(filename)
-        model_base=models[filename]
+    if name not in models:
+        rel_filename = os.path.abspath(os.path.realpath(os.path.join(modules.config.path_checkpoints, name)))
+        abs_filename = os.path.join('/root/autodl-tmp/models/checkpoints/',name)
+        if os.path.exists(rel_filename):
+            filename=rel_filename
+        elif os.path.exists(abs_filename):
+            filename=abs_filename
+        else:
+            return refresh_base_model(modules.config.default_base_model_name)
+        models[name]=core.load_model(filename)
+        model_base=models[name]
         print(f'Base model loaded: {model_base.filename}')
     else:
-        model_base=models[filename]
-        print(f'Model {model_base.filename} already loaded')
+        model_base=models[name]
+        print(f'Model {name} already loaded')
         
 
 
