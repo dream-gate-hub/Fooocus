@@ -256,7 +256,7 @@ default_image_number = get_config_item_or_set_default(
 checkpoint_downloads = get_config_item_or_set_default(
     key='checkpoint_downloads',
     default_value={
-        "juggernautXL_version6Rundiffusion.safetensors": "https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/juggernautXL_version6Rundiffusion.safetensors"
+        "animagineXL_v20.safetensors": "https://hf-mirror.com/Linaqruf/animagine-xl-2.0/resolve/main/animagine-xl-2.0.safetensors"
     },
     validator=lambda x: isinstance(x, dict) and all(isinstance(k, str) and isinstance(v, str) for k, v in x.items())
 )
@@ -391,6 +391,8 @@ def get_model_filenames(folder_path, name_filter=None):
 def update_all_model_names():
     global model_filenames, lora_filenames
     model_filenames = get_model_filenames(path_checkpoints)
+    abs_model_filenames=get_model_filenames('/root/autodl-tmp/models/')
+    model_filenames=model_filenames+abs_model_filenames
     lora_filenames = get_model_filenames(path_loras)
     return
 

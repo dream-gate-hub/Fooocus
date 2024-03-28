@@ -61,7 +61,7 @@ def refresh_base_model(name):
     global model_base
     if name not in models:
         rel_filename = os.path.abspath(os.path.realpath(os.path.join(modules.config.path_checkpoints, name)))
-        abs_filename = os.path.join('/root/autodl-tmp/models/checkpoints/',name)
+        abs_filename = os.path.join('/root/autodl-tmp/models/',name)
         if os.path.exists(rel_filename):
             filename=rel_filename
         elif os.path.exists(abs_filename):
