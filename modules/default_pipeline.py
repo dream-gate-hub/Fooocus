@@ -12,9 +12,13 @@ from extras.expansion import FooocusExpansion
 from ldm_patched.modules.model_base import SDXL, SDXLRefiner
 from modules.sample_hijack import clip_separate
 
+import psutil  # used for spy memory
+
 models={}
 model_base = core.StableDiffusionModel()
 model_refiner = core.StableDiffusionModel()
+max_model_num =3
+
 
 final_expansion = None
 final_unet = None
@@ -59,6 +63,7 @@ def assert_model_integrity():
 @torch.inference_mode()
 def refresh_base_model(name):
     global model_base
+    
     if name not in models:
         rel_filename = os.path.abspath(os.path.realpath(os.path.join(modules.config.path_checkpoints, name)))
         abs_filename = os.path.join('/root/autodl-tmp/models/',name)
@@ -68,21 +73,40 @@ def refresh_base_model(name):
             filename=abs_filename
         else:
             return refresh_base_model(modules.config.default_base_model_name)
+        if (len(models)>=max_model_num):
+            print('too many models loaded,unload ',next(iter(models)))
+            del models[next(iter(models))]
+            models.popitem()                    
+        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!len of models=',len(models))
+        memory_usage = psutil.virtual_memory()
+        print(f"总内存: {memory_usage.total / (1024 ** 3):.2f} GB")
+        print(f"可用内存: {memory_usage.available / (1024 ** 3):.2f} GB")
+        print(f"已使用内存: {memory_usage.used / (1024 ** 3):.2f} GB")
+        print(f"内存使用百分比: {memory_usage.percent}%")
         models[name]=core.load_model(filename)
         model_base=models[name]
         print(f'Base model loaded: {model_base.filename}')
     else:
         model_base=models[name]
         print(f'Model {name} already loaded')
-        
+    """
 
+    rel_filename = os.path.abspath(os.path.realpath(os.path.join(modules.config.path_checkpoints, name)))
+    abs_filename = os.path.join('/root/autodl-tmp/models/',name)
+    if os.path.exists(rel_filename):
+        filename=rel_filename
+    elif os.path.exists(abs_filename):
+        filename=abs_filename
+    else:
+        return refresh_base_model(modules.config.default_base_model_name)
+    
+    if model_base.filename == filename:
+         return
 
-    # if model_base.filename == filename:
-    #     return
-
-    # model_base = core.StableDiffusionModel()
-    # model_base = core.load_model(filename)
-    # print(f'Base model loaded: {model_base.filename}')
+    model_base = core.StableDiffusionModel()
+    model_base = core.load_model(filename)
+    print(f'Base model loaded: {model_base.filename}')
+    """
     return
 
 
