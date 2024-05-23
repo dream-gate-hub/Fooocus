@@ -17,7 +17,7 @@ import psutil  # used for spy memory
 models={}
 model_base = core.StableDiffusionModel()
 model_refiner = core.StableDiffusionModel()
-max_model_num =3
+max_model_num =12
 
 
 final_expansion = None
@@ -174,6 +174,7 @@ def synthesize_refiner_model():
 @torch.no_grad()
 @torch.inference_mode()
 def refresh_loras(loras, base_model_additional_loras=None):
+    #return
     global model_base, model_refiner
 
     if not isinstance(base_model_additional_loras, list):
