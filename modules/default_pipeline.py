@@ -17,7 +17,7 @@ import psutil  # used for spy memory
 models={}
 model_base = core.StableDiffusionModel()
 model_refiner = core.StableDiffusionModel()
-max_model_num =12
+max_model_num =9
 
 
 final_expansion = None
