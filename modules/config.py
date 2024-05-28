@@ -256,7 +256,7 @@ default_image_number = get_config_item_or_set_default(
 checkpoint_downloads = get_config_item_or_set_default(
     key='checkpoint_downloads',
     default_value={
-        "animagineXL_v20.safetensors": "https://hf-mirror.com/Linaqruf/animagine-xl-2.0/resolve/main/animagine-xl-2.0.safetensors"
+        #"animagineXL_v20.safetensors": "https://hf-mirror.com/Linaqruf/animagine-xl-2.0/resolve/main/animagine-xl-2.0.safetensors"
     },
     validator=lambda x: isinstance(x, dict) and all(isinstance(k, str) and isinstance(v, str) for k, v in x.items())
 )
