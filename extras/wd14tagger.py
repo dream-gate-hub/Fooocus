@@ -24,7 +24,7 @@ global_model = None
 global_csv = None
 
 
-def default_interrogator(image_rgb, threshold=0.08, character_threshold=0.85, exclude_tags=""):
+def default_interrogator(image_rgb, threshold=0.3, character_threshold=0.85, exclude_tags=""):
     global global_model, global_csv
 
     model_name = "wd-v1-4-moat-tagger-v2"
