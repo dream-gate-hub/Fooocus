@@ -90,9 +90,18 @@ def refresh_base_model(name):
         model_base=models[name]
         print(f'Model {name} already loaded')
     """
-
+    
     rel_filename = os.path.abspath(os.path.realpath(os.path.join(modules.config.path_checkpoints, name)))
-    abs_filename = os.path.join('/root/autodl-tmp/models/',name)
+    
+    autodl_path = '/root/autodl-tmp/models/'
+    runpod_path = '/workspace/models/'
+    abs_filename_root = ""
+    if os.path.isdir(autodl_path):
+        abs_filename_root = autodl_path
+    elif os.path.isdir(runpod_path):
+        abs_filename_root = runpod_path
+    
+    abs_filename = os.path.join(abs_filename_root,name)
     if os.path.exists(rel_filename):
         filename=rel_filename
     elif os.path.exists(abs_filename):
