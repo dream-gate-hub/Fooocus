@@ -94,7 +94,7 @@ def refresh_base_model(name):
     rel_filename = os.path.abspath(os.path.realpath(os.path.join(modules.config.path_checkpoints, name)))
     
     autodl_path = '/root/autodl-tmp/models/'
-    runpod_path = '/workspace/models/'
+    runpod_path = '/models/'
     abs_filename_root = ""
     if os.path.isdir(autodl_path):
         abs_filename_root = autodl_path

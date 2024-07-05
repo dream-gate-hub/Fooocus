@@ -394,7 +394,7 @@ def update_all_model_names():
     
     abs_model_filenames = []
     autodl_path = '/root/autodl-tmp/models/'
-    runpod_path = '/workspace/models/'
+    runpod_path = '/models/'
     if os.path.isdir(autodl_path):
         abs_model_filenames = get_model_filenames(autodl_path)
     elif os.path.isdir(runpod_path):
