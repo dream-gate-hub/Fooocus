@@ -112,7 +112,7 @@ def refresh_base_model(name):
     if model_base.filename == filename:
          return
 
-    # model_base = core.StableDiffusionModel()
+    model_base = core.StableDiffusionModel()
     model_base = core.load_model(filename)
     print(f'Base model loaded: {model_base.filename}')
 
