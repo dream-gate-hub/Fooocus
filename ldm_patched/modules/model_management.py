@@ -355,7 +355,7 @@ def free_memory(memory_required, device, keep_loaded=[]):
     unloaded_model = False
     for i in range(len(current_loaded_models) -1, -1, -1):
         if not ALWAYS_VRAM_OFFLOAD:
-            if get_free_memory(device) > memory_required:
+            if get_free_memory(device) > (memory_required + 20 * 1024 * 1024 * 1024):
                 break
         shift_model = current_loaded_models[i]
         if shift_model.device == device:
